@@ -6,6 +6,7 @@
 #include <time.h>
 #include <getopt.h>
 #include <ctype.h>
+#include "panic.c"
 
 /*
  * $ hexdump -s10 -l3 file
