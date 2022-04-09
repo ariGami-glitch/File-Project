@@ -28,7 +28,7 @@ void panic();
 
 int get_opts(int count, char *args[]) {
     int opt, len, i, good = 1;
-    while (good && (opt = getopt(count, args, "s:l:")) != -1) {
+    while (good && (opt = getopt(count, args, "s:l:e")) != -1) {
         int len, i;
         switch (opt) {
             case 's':
@@ -52,6 +52,8 @@ int get_opts(int count, char *args[]) {
                     }
                 if (good)
                     blocks = atoi(optarg);
+                break;
+            case 'e':
                 break;
             case ':':
                 fprintf(stderr, "option missing value\n");
