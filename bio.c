@@ -145,8 +145,11 @@ int main(int argc, char *argv[]) {
         //struct inode *ip = ialloc(T_DIR);
         //ip->inum = 1;
         //ip->ref = 0xab;
-        //printf("inode num: %d, type: %d\n", ip->inum, ip->type);
+        //ip->ref = 0xab;
+
         struct inode *ip = iget(T_DIR);
+        printf("inode num: %d, type: %d\n", ip->blocks[1], ip->type);
+
         curr_proc->cwd = ip;
         /*
         int s = bread(202, (char *)b); 
@@ -162,20 +165,29 @@ int main(int argc, char *argv[]) {
         */
 
         // Perform application code
+
+
+
         int fd1 = tfs_open("GUSTY", TO_CREATE | TO_RDWR, 0);
         printf("fd1: %d\n", fd1);
         s = tfs_write(fd1, "COOPER123", 9);
         printf("tfs_write bytes: %d\n", s);
+
+
+
         int fd2 = tfs_open("HELLOWORLD", TO_CREATE | TO_RDWR, 0);
         printf("fd2: %d\n", fd2);
         s = tfs_write(fd2, "HELLO TO EVERYONE IN the world! Happy New Years!", 48);
         printf("tfs_write bytes: %d\n", s);
-        s = tfs_write(fd2, "Writing data to another file. 123456789abcdefgh!", 48);
-        printf("tfs_write bytes: %d\n", s);
+
+
+
         int fd3 = tfs_open("Another", TO_CREATE | TO_RDWR, 0);
         printf("fd3: %d\n", fd3);
         s = tfs_write(fd3, "Writing data to another file. 123456789abcdefgh!", 48);
         printf("tfs_write bytes: %d\n", s);
+
+
 
         int fd4 = tfs_open("MyFile", TO_CREATE | TO_RDWR, 0);
         printf("fd4: %d\n", fd4);
@@ -183,10 +195,25 @@ int main(int argc, char *argv[]) {
         printf("tfs_write bytes: %d\n", s);
 
 
+
+        int fd5 = tfs_open("love", TO_CREATE | TO_RDWR, 0);
+        printf("fd5: %d\n", fd5);
+        s = tfs_write(fd5, "GUSTTTTTTTTTY LOVEEEE", 25);
+        printf("tfs_write bytes: %d\n", s);
+
+        int fd6 = tfs_open("kk", TO_CREATE | TO_RDWR, 0);
+        printf("fd6: %d\n", fd6);
+        s = tfs_write(fd6, "NIIIICE DUDE", 25);
+        printf("tfs_write bytes: %d\n", s);
+
+
         tfs_close(fd1);
         tfs_close(fd2);
         tfs_close(fd3);
         tfs_close(fd4);
+        tfs_close(fd5);
+        tfs_close(fd6);
+
         
         // Write file info back to TDD and close TFS
         writefsinfo();
@@ -217,16 +244,42 @@ int main(int argc, char *argv[]) {
         // Perform application code
         char buffer[512];
         strcpy(buffer, "sometext");
+
+        int fd1 = tfs_open("GUSTY", TO_RDONLY, 0);
+        printf("fd1: %d\n", fd1);
+        s = tfs_read(fd1, buffer, 47);
+        printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd1, s, buffer);
+
+
+        int fd2 = tfs_open("HELLOWORLD", TO_RDONLY, 0);
+        printf("fd2: %d\n", fd2);
+        s = tfs_read(fd2, buffer, 47);
+        printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd2, s, buffer);
+
+
         int fd3 = tfs_open("Another", TO_RDONLY, 0);
         printf("fd3: %d\n", fd3);
         s = tfs_read(fd3, buffer, 19); 
         printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd3, s, buffer);
+
+
 
         int fd4 = tfs_open("MyFile", TO_RDONLY, 0);
         printf("fd4: %d\n", fd4);
         s = tfs_read(fd4, buffer, 47);
         printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd4, s, buffer);
 
+
+
+        int fd5 = tfs_open("love", TO_RDONLY, 0);
+        printf("fd5: %d\n", fd5);
+        s = tfs_read(fd5, buffer, 24);
+        printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd5, s, buffer);
+
+        int fd6 = tfs_open("kk", TO_RDONLY, 0);
+        printf("fd6: %d\n", fd6);
+        s = tfs_read(fd6, buffer, 24);
+        printf("tfs_read bytes: fd: %d, bytes read: %d value read: %s\n", fd6, s, buffer);
 
         // Write file info back to TDD and close TFS
         writefsinfo();

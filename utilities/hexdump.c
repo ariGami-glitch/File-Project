@@ -71,7 +71,7 @@ int get_opts(int count, char *args[]) {
                 break;
         }
     }
-    if(good && optind > count-1) {
+    if(good && optind > (count-1)) {
         fprintf(stderr, "Invalid number of arguments. %d\n", optind);
         good = 0;
     }
