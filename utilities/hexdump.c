@@ -7,7 +7,6 @@
 #include <getopt.h>
 #include <ctype.h>
 #include "panic.c"
-
 /*
  * $ hexdump -s10 -l3 file
  * hexdump shows hex values of tiny file system blocks
@@ -54,6 +53,8 @@ int get_opts(int count, char *args[]) {
                     blocks = atoi(optarg);
                 break;
             case 'e':
+                start_block = 4;
+                blocks = 4;
                 break;
             case ':':
                 fprintf(stderr, "option missing value\n");
