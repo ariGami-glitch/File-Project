@@ -27,7 +27,7 @@ void panic();
 
 int get_opts(int count, char *args[]) {
     int opt, len, i, good = 1;
-    while (good && (opt = getopt(count, args, "s:l:e")) != -1) {
+    while (good && (opt = getopt(count, args, "s:l:e:")) != -1) {
         int len, i;
         switch (opt) {
             case 's':
@@ -50,11 +50,20 @@ int get_opts(int count, char *args[]) {
                         break;
                     }
                 if (good)
-                    blocks = atoi(optarg);
+                    blocks = atoi(optarg) - start_block;
                 break;
             case 'e':
-                start_block = 4;
-                blocks = 4;
+                len = strlen(optarg);
+                for (i=0;i<len; i++)
+                    if (!isdigit(optarg[i])) {
+                        fprintf(stderr, "-l value must be a number.\n");
+                        good = 0;
+                        break;
+                    }
+                if (good) {
+                    blocks = atoi(optarg) - start_block + 1;
+                    
+                }
                 break;
             case ':':
                 fprintf(stderr, "option missing value\n");
