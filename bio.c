@@ -206,6 +206,17 @@ int main(int argc, char *argv[]) {
         s = tfs_write(fd6, "NIIIICE DUDE", 25);
         printf("tfs_write bytes: %d\n", s);
 
+        int fd7 = tfs_open("ExtraFile", TO_CREATE | TO_RDWR, 0);
+        printf("fd7: %d\n", fd7);
+        s = tfs_write(fd7, "LOLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL", 513);
+        printf("tfs_write bytes: %d\n", s);
+
+
+        int fd8 = tfs_open("SecondExtraFile", TO_CREATE | TO_RDWR, 0);
+        printf("fd8: %d\n", fd8);
+        s = tfs_write(fd8, "LOL", 3);
+        printf("tfs_write bytes: %d\n", s);
+
 
         tfs_close(fd1);
         tfs_close(fd2);
@@ -213,6 +224,8 @@ int main(int argc, char *argv[]) {
         tfs_close(fd4);
         tfs_close(fd5);
         tfs_close(fd6);
+        tfs_close(fd7);
+        tfs_close(fd8);
 
         
         // Write file info back to TDD and close TFS
