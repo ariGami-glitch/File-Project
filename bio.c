@@ -299,7 +299,7 @@ int main(int argc, char *argv[]) {
         curr_proc->cwd = ip;
         printf("File: .\n");
         printf("Size: %d\tBlocks: 8\tIO Block: 512\tdirectory\n", ip->size);
-        printf("Device: 0\tInode: %d\tLinks: 6\n", ip->inum);
+        printf("Device: 0\tInode: %d\tLinks: %d\n", ip->inum, ip->nlink);
         printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
         // Perform application code
 
