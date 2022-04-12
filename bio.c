@@ -285,6 +285,75 @@ int main(int argc, char *argv[]) {
         writefsinfo();
         closefs();
 
+    } else if (strcmp(argv[1], "fstat") == 0) {
+        printf("getting stats of the files in tinyfs.\n");
+        // Open TFS and establish curr_proc so we can do application code
+        // curr_proc is a macro defined in proc.h
+        curr_proc = malloc(sizeof(struct proc));
+        strcpy(curr_proc->name, "Gusty");
+        openfs(FSNAME);
+        //printf("fs : %d\n", fs);
+        memset(b, 0, BSIZE);
+        readfsinfo();
+        struct inode *ip = iget(T_DIR);
+        curr_proc->cwd = ip;
+        printf("File: .\n");
+        printf("Size: %d\tBlocks: 8\tIO Block: 512\tdirectory\n", ip->size);
+        printf("Device: 0\tInode: %d\tLinks: 6\n", ip->inum);
+        printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
+        // Perform application code
+
+        int fd1 = tfs_open("GUSTY", TO_RDONLY, 0);
+        printf("File: GUSTY\n");
+        struct tfs_stat *st = malloc(sizeof(struct tfs_stat));
+        s = tfs_fstat(fd1, st);
+        printf("Size: %d \tBlocks: 8\tIO Block: 512\tregular file\n", st->size);
+        printf("Device: %d\tInode: %u\tLinks: %d\n", st->dev, st->ino, st->nlink);
+        printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
+
+        int fd2 = tfs_open("HELLOWORLD", TO_RDONLY, 0);
+        printf("File: HELLOWORLD\n");
+        s = tfs_fstat(fd2, st);
+        printf("Size: %d\tBlocks: 8\tIO Block: 512\tregular file\n", st->size);
+        printf("Device: %d\tInode: %u\tLinks: %d\n", st->dev, st->ino, st->nlink);
+        printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
+
+
+        int fd3 = tfs_open("Another", TO_RDONLY, 0);
+        printf("File: Another\n");
+        s = tfs_fstat(fd3, st);
+        printf("Size: %d\tBlocks: 8\tIO Block: 512\tregular file\n", st->size);
+        printf("Device: %d\tInode: %u\tLinks: %d\n", st->dev, st->ino, st->nlink);
+        printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
+
+
+
+        int fd4 = tfs_open("MyFile", TO_RDONLY, 0);
+        printf("File: MyFile\n");
+        s = tfs_fstat(fd4, st);
+        printf("Size: %d\tBlocks: 8\tIO Block: 512\tregular file\n", st->size);
+        printf("Device: %d\tInode: %u\tLinks: %d\n", st->dev, st->ino, st->nlink);
+        printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
+
+
+
+        int fd5 = tfs_open("love", TO_RDONLY, 0);
+        printf("File: love\n");
+        s = tfs_fstat(fd5, st);
+        printf("Size: %d\tBlocks: 8\tIO Block: 512\tregular file\n", st->size);
+        printf("Device: %d\tInode: %u\tLinks: %d\n", st->dev, st->ino, st->nlink);
+        printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
+
+        int fd6 = tfs_open("kk", TO_RDONLY, 0);
+        printf("File: kk\n");
+        s = tfs_fstat(fd6, st);
+        printf("Size: %d\tBlocks: 8\tIO Block: 512\tregular file\n", st->size);
+        printf("Device: %d\tInode: %u\tLinks: %d\n", st->dev, st->ino, st->nlink);
+        printf("Create: %u\nModify: %u\n\n", ip->ctime, ip->mtime);
+
+        // Write file info back to TDD and close TFS
+        writefsinfo();
+        closefs();
     } else {
         printf("must enter bio with create, write, read\n");
         exit(1);
