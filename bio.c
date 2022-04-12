@@ -381,7 +381,7 @@ int main(int argc, char *argv[]) {
         writefsinfo();
         closefs();
     } else {
-        printf("must enter bio with create, write, read\n");
+        printf("must enter bio with create, write, read, fstat\n");
         exit(1);
     }
     return 0;
